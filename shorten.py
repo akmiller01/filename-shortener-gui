@@ -10,11 +10,13 @@ def shorten(target_directory, target_length=256):
     print('Shortening {} filenames... Please wait...'.format(len(files)))
     unshortenable_files = []
     for file in files:
+        if os.path.isdir(file):
+            continue
         filepath, filename_ext = os.path.split(file)
         filename, ext = os.path.splitext(filename_ext)
         total_length = len(file)
         if total_length <= target_length:
-            pass
+            continue
         else:
             length_difference = total_length - target_length
             filename_length = len(filename)
@@ -38,3 +40,7 @@ def shorten(target_directory, target_length=256):
         for unshortenable_file in unshortenable_files:
             print(unshortenable_file)
     print('Done.')
+
+
+if __name__ == '__main__':
+    shorten("/home/alex/Documents/test", 50)
