@@ -34,7 +34,10 @@ def shorten(target_directory, target_length=256):
                     new_filename = filename[:(filename_length-(length_difference + optional_number_str_length + 1))]
                     new_filename_ext = '{}_{}{}'.format(new_filename, optional_number_str, ext)
                     new_file = os.path.join(filepath, new_filename_ext)
-                shutil.move(file, new_file)
+                if len(new_file) > target_length:
+                    unshortenable_files.append(file)
+                else:
+                    shutil.move(file, new_file)
     if len(unshortenable_files) > 0:
         print('Unable to shorten:')
         for unshortenable_file in unshortenable_files:
